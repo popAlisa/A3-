@@ -18,7 +18,7 @@ while True:
     x = accelerometer.get_x()
     y = accelerometer.get_y()
     z = accelerometer.get_z()
-    heading = (15 - compass.heading()) // 30) % 12
+    heading = (15 - compass.heading()) // 30 % 12
     display.show ( Image. All_CLOCKS[needle])
     heading = compss.heading()
     tempo = range_map(y, -1000, 1000, 50, 1000)
