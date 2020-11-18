@@ -101,7 +101,6 @@ while True:
     print((count_width,))
     if running_time() > last_change + wait_time:
         wait_time = range_map(count_height, 0, 10000, 5000, 500)
-        wait_time = range_map(count_up, 0, 10000, 5000, 500)
         wait_time = range_map(count_width, 0, 10000, 5000, 500)
         for x in range(30):
             np[x] = (255, 255, 255)
