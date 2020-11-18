@@ -12,65 +12,69 @@ count_up = 0
 g_played = False
 d_played = False
 initial = 500
+compass.aclibrate()
 
 while True:
     x = accelerometer.get_x()
     y = accelerometer.get_y()
     z = accelerometer.get_z()
-
-    if x < 250 and g_played is False:
-        music.play('C3')
+    heading = (15 - compass.heading()) // 30) % 12
+    display.show ( Image. All_CLOCKS[needle])
+    heading = compss.heading()
+    tempo = range_map(y, -1000, 1000, 50, 1000)
+    if heading < 50 and g_played is False:
+        music.play('C')
         g_played = True
         d_played = False
-    elif x > 250 and x < 500 and g_played is False:
+    elif heading < 100 and g_played is False:
         music.play('D')
         d_played = True
         g_played = False
-    elif x > 500 and x < 750 and g_played is False:
+    elif heading < 150 and g_played is False:
         music.play('E')
         d_played = True
         g_played = False
-    elif x > 750 and x < 1000 and g_played is False:
+    elif heading < 200 and g_played is False:
         music.play('F')
         d_played = True
         g_played = False
-    elif x > 1000 and x < 1250 and g_played is False:
+    elif heading < 250 and g_played is False:
         music.play('G')
         d_played = True
         g_played = False
-    elif x > 1250 and x < 1500 and g_played is False:
+    elif heading < 300 and g_played is False:
         music.play('A')
         d_played = True
         g_played = False
-    elif x > 1500 and x < 1750 and g_played is False:
+    elif heading < 360 and g_played is False:
         music.play('B')
         d_played = True
         g_played = False
-    elif x > 1750 and x < 2000 and g_played is False:
-        music.play('C')
+     # when microbit tilt forward the speed of notes become faster by 12  
+    elif y < 60 and g_played is False:
+        music.change_tempo_by(12)
         d_played = True
         g_played = False
-    elif y > 10 and g_played is False:
-        initial += 100
-        music.pitch(initial , 100)
-    elif y < 10 and g_played is False:
-        initial -= 100
-        music.pitch(initial , 100)
-    elif y < -300 and g_played is False:
-        music.play('F')
+    elif y < 180 and g_played is False:
+        music.change_tempo_by(12)
         d_played = True
         g_played = False
-    elif y > -301 and y < 700 and g_played is False:
-        music.play('G')
+     #slower by 12
+    elif y < 240 and g_played is False:
+        music.change_tempo_by(-12)
         d_played = True
         g_played = False
-    elif y > 700:
-        music.play('A')
+    elif y < 360 and g_played is False:
+        music.change_tempo_by(-12)
         d_played = True
         g_played = False
+    elif  and g_played is False:
+        music.change_tempo_by(12)
+        d_played = True
+        g_played = False
+    # this is when I tilt the microbit along X and Y axis the light on the ledstrip  will respond to the move speed
     count_height -= 20*y
     count_width -= 20*x
-
     if count_height < 0 or count_width < 0 :
         count_height = 0
         count_up = 0
