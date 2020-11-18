@@ -10,7 +10,7 @@ wait_time = 500
 count_height = 0
 count_width = 0
 g_played = False
-d_played = False
+d_played = Falsea
 initial = 500
 compass.aclibrate()
 
@@ -19,7 +19,7 @@ while True:
     y = accelerometer.get_y()
     heading = ((15 - compass.heading()) // 30) % 12
     display.show(Image.ALL_CLOCKS[needle])
-    heading = compss.heading()
+    heading = compass.heading()
     tempo = range_map(y, -1000, 1000, 50, 1000)
     
     if heading < 50 and g_played is False:
