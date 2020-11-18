@@ -22,6 +22,7 @@ while True:
     display.show ( Image. All_CLOCKS[needle])
     heading = compss.heading()
     tempo = range_map(y, -1000, 1000, 50, 1000)
+    
     if heading < 50 and g_played is False:
         music.play('C')
         g_played = True
@@ -72,6 +73,25 @@ while True:
         music.change_tempo_by(12)
         d_played = True
         g_played = False
+        
+     # microbit will play a song when button A is pressed
+    elif microbit.button_a.is_pressed():
+         notes = [
+                'E5:1', 'E5:1', 'E5:2', 'R', 'C5:1', 'E5:1',
+                'G5:2', 'R', 'G4:2', 'C5:2', 'G4:2', 'E4:2',
+                'R', 'A4:1', 'B4:1', 'A#:1', 'A4:1', 'R', 'G4:1',
+                'E5:1', 'R', 'G5:1', 'A5:1', 'R', 'F5:1', 'G5:1',
+                'R', 'E5:2', 'R', 'C5:1', 'D5:1', 'B4:1', 'R',
+                'C5:2', 'G4:2', 'E4:2', 'A4:1', 'B4:1', 'A#:1',
+                'A4:1', 'R', 'G4:1', 'E5:1', 'R', 'G5:1', 'A5:1',
+                'R', 'F5:1', 'G5:1', 'R', 'E5:2', 'R', 'C5:1',
+                'D5:1', 'B4:1', 'R', 'G5:1', 'F#:1', 'F5:1', 'D5:1',
+                'E5:2', 'G4:1', 'A4:1', 'C5:2', 'R', 'A4:1',
+                'C5:1', 'D5:1', 'G5:1', 'F#:1', 'F5:1', 'D5:1',
+                'E5:2', 'R', 'C6:1','C6:1','C6:2'
+                ]
+         music.play(notes) 
+         
     # this is when I tilt the microbit along X and Y axis the light on the ledstrip  will respond to the move speed
     count_height -= 20*y
     count_width -= 20*x
