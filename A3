@@ -9,16 +9,6 @@ last_change = 0
 wait_time = 500
 count_height = 0
 count_width = 0
-g_played = False
-d_played = False
-e_played = False
-f_played = False
-g_played = False
-a_played = False
-b_played = False
-c_played = False
-initial = 500
-compass.clibrate()
 
 while True:
     x = accelerometer.get_x()
@@ -27,47 +17,27 @@ while True:
     # display.show(Image.ALL_CLOCKS[needle])
     heading = compass.heading()
     tempo = range_map(y, -1000, 1000, 50, 1000)
-    
-    if heading < 50 and c_played is False:
+    if heading < 50 :
         music.play('C')
-        c_played = True
-        d_played = False
-    elif heading < 100 and  d_played = False is False:
+    elif heading < 100 :
         music.play('D')
-        d_played = True
-        e_played = False
-    elif heading < 150 and e_played = False:
+    elif heading < 150 :
         music.play('E')
-        e_played = True
-        f_played = False
-    elif heading < 200 and f_played = False:
+    elif heading < 200 :
         music.play('F')
-        f_played = True
-        g_played = False
-    elif heading < 250 and g_played is False:
+    elif heading < 250 :
         music.play('G')
-        g_played = True
-        a_played = False
-    elif heading < 300 and a_played is False:
+    elif heading < 300 :
         music.play('A')
-        a_played = True
-        b_played = False
-    elif heading < 360 and b_played is False:
+    elif heading < 360 :
         music.play('B')
-        b_played = True
-        c_played = False
         
     # when microbit tilt forward the speed of notes become faster by 12  
-    elif y < 60 :
+    if y > -2000 and y < 0 :
         music.change_tempo_by(12)
-    elif y < 180 :
+    elif y > 0 and y < 2000 :
         music.change_tempo_by(12)
-    # slower by 12
-    elif y < 240 :
-        music.change_tempo_by(-12)
-    elif y < 360 :
-        music.change_tempo_by(-12)
-        
+
     # microbit will play a song when button A is pressed
     elif button_a.is_pressed():
         notes = [
