@@ -1,22 +1,36 @@
-# Write your code here :-)
 from microbit import *
 import music
 import neopixel
-np = neopixel.NeoPixel(pin0, 30)
+np = neopixel.NeoPixel(pin1, 30)
 def range_map(value, in_min, in_max, out_min, out_max):
     return (value - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 last_change = 0
 wait_time = 500
 count_height = 0
-count_width = 0
+notes = [
+    'E5:1', 'E5:1', 'E5:2', 'R', 'C5:1', 'E5:1',
+    'G5:2', 'R', 'G4:2', 'C5:2', 'G4:2', 'E4:2',
+    'R', 'A4:1', 'B4:1', 'A#:1', 'A4:1', 'R', 'G4:1',
+    'E5:1', 'R', 'G5:1', 'A5:1', 'R', 'F5:1', 'G5:1',
+    'R', 'E5:2', 'R', 'C5:1', 'D5:1', 'B4:1', 'R',
+    'C5:2', 'G4:2', 'E4:2', 'A4:1', 'B4:1', 'A#:1',
+    'A4:1', 'R', 'G4:1', 'E5:1', 'R', 'G5:1', 'A5:1',
+    'R', 'F5:1', 'G5:1', 'R', 'E5:2', 'R', 'C5:1',
+    'D5:1', 'B4:1', 'R', 'G5:1', 'F#:1', 'F5:1', 'D5:1',
+    'E5:2', 'G4:1', 'A4:1', 'C5:2', 'R', 'A4:1',
+    'C5:1', 'D5:1', 'G5:1', 'F#:1', 'F5:1', 'D5:1',
+    'E5:2', 'R', 'C6:1', 'C6:1', 'C6:2'
+    ]
+
+music.play(notes)
 
 while True:
     x = accelerometer.get_x()
     y = accelerometer.get_y()
+    z = accelerometer.get_z()
     heading = ((15 - compass.heading()) // 30) % 12
-    # display.show(Image.ALL_CLOCKS[needle])
+    display.show(Image.ALL_CLOCKS[heading])
     heading = compass.heading()
-    tempo = range_map(y, -1000, 1000, 50, 1000)
     if heading < 50 :
         music.play('C')
     elif heading < 100 :
@@ -31,48 +45,19 @@ while True:
         music.play('A')
     elif heading < 360 :
         music.play('B')
-        
-    # when microbit tilt forward the speed of notes become faster by 12  
-    if y > -2000 and y < 0 :
-        music.change_tempo_by(12)
-    elif y > 0 and y < 2000 :
-        music.change_tempo_by(12)
 
-    # microbit will play a song when button A is pressed
-    elif button_a.is_pressed():
-        notes = [
-                'E5:1', 'E5:1', 'E5:2', 'R', 'C5:1', 'E5:1',
-                'G5:2', 'R', 'G4:2', 'C5:2', 'G4:2', 'E4:2',
-                'R', 'A4:1', 'B4:1', 'A#:1', 'A4:1', 'R', 'G4:1',
-                'E5:1', 'R', 'G5:1', 'A5:1', 'R', 'F5:1', 'G5:1',
-                'R', 'E5:2', 'R', 'C5:1', 'D5:1', 'B4:1', 'R',
-                'C5:2', 'G4:2', 'E4:2', 'A4:1', 'B4:1', 'A#:1',
-                'A4:1', 'R', 'G4:1', 'E5:1', 'R', 'G5:1', 'A5:1',
-                'R', 'F5:1', 'G5:1', 'R', 'E5:2', 'R', 'C5:1',
-                'D5:1', 'B4:1', 'R', 'G5:1', 'F#:1', 'F5:1', 'D5:1',
-                'E5:2', 'G4:1', 'A4:1', 'C5:2', 'R', 'A4:1',
-                'C5:1', 'D5:1', 'G5:1', 'F#:1', 'F5:1', 'D5:1',
-                'E5:2', 'R', 'C6:1', 'C6:1', 'C6:2'
-                ]
-        music.play(notes) 
-         
-    # this is when I tilt the microbit along X and Y axis the
-    # light on the ledstrip  will respond to the move speed
     count_height -= 20*y
-    count_width -= 20*x
-    if count_height < 0 or count_width < 0 :
+    if count_height < 0:
         count_height = 0
-        count_up = 0
-        count_width = 0
-    elif count_height > 10000 or count_width > 10000 :
+    elif count_height > 10000:
         count_height = 10000
+    acc = accelerometer.get_y() ** 2
     print((count_height,))
-    print((count_width,))
     if running_time() > last_change + wait_time:
-        wait_time = range_map(count_height, 0, 10000, 5000, 500)
-        wait_time = range_map(count_width, 0, 10000, 5000, 500)
+        sleep(0.5*wait_time)
+        wait_time = range_map(count_height, 0, 10000, 5000, 1000)
         for x in range(30):
-            np[x] = (255, 255, 255)
-    np.show()
-    sleep(0.5*wait_time)
-    np.clear()
+            np[x] = (0, 255, 255)
+        np.show()
+        sleep(0.5*wait_time)
+        np.clear()
